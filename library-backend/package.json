@@ -1,0 +1,31 @@
+{
+  "name": "library-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tvaskisalo/FullStack2021Part8.git"
+  },
+  "author": "tvaskisalo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tvaskisalo/FullStack2021Part8/issues"
+  },
+  "homepage": "https://github.com/tvaskisalo/FullStack2021Part8#readme",
+  "dependencies": {
+    "apollo-server": "^3.5.0",
+    "apollo-server-core": "^3.5.0",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.7.2",
+    "mongoose": "^6.0.14",
+    "mongoose-unique-validator": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
