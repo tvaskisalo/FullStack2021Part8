@@ -4,8 +4,9 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import Login from './components/Login'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useSubscription } from '@apollo/client'
 import Recommended from './components/Recommended'
+import {ALL_BOOKS, BOOK_ADDED} from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
@@ -21,7 +22,26 @@ const App = () => {
     setToken(localStorage.getItem('books-user-token'))
   }, [])
 
+  const updateCacheWith = (bookAdded) => {
+    const includedIn = (set, object) => 
+      set.map(b => b.id).includes(object.id)
+    const  bookInStore = client.readQuery({ query: ALL_BOOKS})
+    if (!includedIn(bookInStore.allBooks, bookAdded)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: {allBooks: bookInStore.allBooks.concat(bookAdded)}
+      })
+    }
+    
+  }
 
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const bookAdded = subscriptionData.data.bookAdded
+      window.alert(`new book ${bookAdded.title} was added`)
+      updateCacheWith(bookAdded)
+    }
+  })
   if (!token) {
     return (
       <div>
